@@ -1,0 +1,69 @@
+// ==========================================================
+// COMANDOS Y REQUISITOS IMPORTANTES PARA INSTALAR ODOO 14
+// ==========================================================
+// - CREAR EL ENTORNO USANDO PYTHON DEL ODOO
+     - cd C:\Odoo14\
+     - "C:\Odoo14\python\python.exe" -m venv venv
+// - ACTIVAR ENTORNO
+     - venv\Scripts\activate
+// - INSTALAR DEPENDENCIAS
+     - PASOS EXTRAS DE COMPATIBILIDAD
+       - Ir a server -> requeriments.txt -> Comentar temporalmente la linea 50: python-stdnum==1.8
+       - cd server
+       - pip install -r requirements.txt
+       - Luego descomentar la linea 50 e instalar:
+         - set PYTHONIOENCODING=utf-8
+         - pip install python-stdnum==1.17
+       - Desintalar la versión actual de lxml:
+         - pip uninstall lxml -y
+       - Instalar:
+         - pip install lxml==4.8.0
+//  - INICIAR ODOO
+     - (venv) Odoo14\server> python odoo-bin -c odoo.conf
+
+// COMANDOS OPCIONALES (POR SI HAY QUE COMPILAR)
+    - Actualizar pip:
+      - python -m pip install --upgrade pip
+    - Wheels Tools:
+      - pip install wheel setuptools
+
+// COMANDO PARA ACTUALIZAR EL MODULO CREADO
+   - python odoo-bin -c odoo.conf --update nombre_modulo --stop-after-init
+
+// Configuraciones odoo.conf necesarias:
+[options]
+; Configuración básica
+admin_passwd = admin
+db_host = localhost
+db_port = 5432
+db_user = odoo16
+db_password = odoo16
+addons_path = C:\odoo16\addons,C:\odoo16\custom_addons
+; Desarrollo
+log_level = debug
+dev_mode = True
+
+// Contenido del archivo LAUNCH
+  "version": "0.2.0",
+  "configurations": [
+
+    {
+      "name": "Depurador de Python: Odoo14",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "C:\\Odoo14\\venv\\Scripts\\python.exe",
+      "program": "C:\\Odoo14\\server\\odoo-bin",
+      "console": "integratedTerminal",
+      "args": [
+        "-c",
+        "C:\\Odoo14\\server\\odoo.conf",
+        "--dev",
+        "xml"
+      ],
+      "env": {
+        "PYTHONPATH": "C:\\Odoo14\\server"
+      },
+      "justMyCode": false
+    }
+  ]
+}
